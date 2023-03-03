@@ -1,4 +1,5 @@
 package com.example.addon.modules;
+import com.example.addon.Addon;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -22,16 +23,16 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 
-public class AnvilDupe extends Module {
+public class ModuleExample extends Module {
     private BlockPos target;
-    private int startCount, prevSlot;
+    private int prevSlot;
     private int first = -1;
     private boolean didDupe = false;
     private boolean pickingUp = false;
     private ItemStack toDupe = null;
 
-    public AnvilDupe() {
-        super(Categories.World, "auto-anvil-dupe", "Automatically dupes using anvil dupe");
+    public ModuleExample() {
+        super(Addon.CATEGORY, "auto-anvil-dupe", "Automatically dupes using anvil dupe");
     }
 
 
@@ -50,7 +51,7 @@ public class AnvilDupe extends Module {
     @Override
     public void onActivate() {
         target = null;
-        startCount = InvUtils.find(Items.OBSIDIAN).getCount();
+        int startCount = InvUtils.find(Items.OBSIDIAN).count();
         prevSlot = mc.player.getInventory().selectedSlot;
         didDupe = false;
         first = -1;
@@ -60,7 +61,7 @@ public class AnvilDupe extends Module {
     @Override
     public void onDeactivate() {
         if (mc.crosshairTarget == null) return;
-        InvUtils.swap(prevSlot);
+        InvUtils.swap(prevSlot, true);
         toDupe = null;
     }
 
@@ -95,7 +96,7 @@ public class AnvilDupe extends Module {
         }
 
         if (mc.world.getBlockState(target).getMaterial().isReplaceable()) {
-            FindItemResult echest = InvUtils.findInHotbar(AnvilDupe::isAnvil);
+            FindItemResult echest = InvUtils.findInHotbar(ModuleExample::isAnvil);
             didDupe = false;
             if (!echest.found()) {
                 error("No Anvils in hotbar, disabling");
@@ -110,7 +111,7 @@ public class AnvilDupe extends Module {
 
             if (mc.player.currentScreenHandler == mc.player.playerScreenHandler) {
                 //we are not in an inventory okay let's open the anvil
-                ActionResult res = mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, (BlockHitResult) mc.crosshairTarget);
+                ActionResult res = mc.interactionManager.interactBlock(mc.player, Hand.OFF_HAND, (BlockHitResult) mc.crosshairTarget);
                 if (res == ActionResult.SUCCESS) {
                     if (mc.player.currentScreenHandler instanceof AnvilScreenHandler) {
                         //opened !
@@ -168,7 +169,7 @@ public class AnvilDupe extends Module {
                 //not renamed ? let's do this
                 //rename item
                 String newName;
-                String name = mc.player.currentScreenHandler.getSlot(0).getStack().getName().asString();
+                String name = mc.player.currentScreenHandler.getSlot(0).getStack().getName().getString();
                 if (!name.endsWith(" ")) {
                     newName = name + " "; //add a space
                 } else {
