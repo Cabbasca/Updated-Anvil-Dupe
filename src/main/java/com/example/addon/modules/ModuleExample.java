@@ -186,14 +186,9 @@ public class ModuleExample extends Module {
             if (((AnvilScreenHandler) mc.player.currentScreenHandler).getLevelCost() != 1) {
                 return; //either you are playing around repairing stuff (not funny btw) or he's not ready
             }
-            //item is there but is the inv full ?
-            if (mc.player.getInventory().getEmptySlot() == -1) {
-                //yep inv is full
-                //we dupin now
-                mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, 2, 0, SlotActionType.PICKUP, mc.player);
+           mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, 2, 0, SlotActionType.PICKUP, mc.player);
                 //got shulker out !
                 didDupe = true;
-            }
         }
     }
 }
