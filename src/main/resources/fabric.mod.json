@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "id": "addon-template",
+  "id": "anvil-dupe",
   "version": "${version}",
-  "name": "Addon Template",
-  "description": "An addon template for the Meteor addons.",
+  "name": "1F2D Anvil Dupe",
+  "description": "An meteor addon for duping on the 1F2D anarchy server.",
   "authors": [
-    "seasnail"
+    "Trolman"
   ],
   "contact": {
-    "repo": "https://github.com/MeteorDevelopment/meteor-addon-template"
+    "repo": "https://github.com/Cabbasca/Updated-Anvil-Dupe"
   },
   "icon": "assets/template/icon.png",
   "environment": "client",
